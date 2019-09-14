@@ -3,6 +3,7 @@ require("dotenv").config({
 })
 
 module.exports = {
+  pathPrefix: `/gourmet`,
   siteMetadata: {
     title: `Gourmet Gatsby`,
     description: `This will eventually be a Gatsby-based frontend for viewing a Gourmet (https://github.com/thinkle/gourmet) database.`,
@@ -36,19 +37,36 @@ module.exports = {
       options: {
         connectionDetails: {
           host: process.env.MYSQL_HOSTNAME,
+          port: process.env.MYSQL_PORT,
           user: process.env.MYSQL_USER,
           password: process.env.MYSQL_PASSWORD,
-          database: process.env.MYSQL_DATABASE
+          database: process.env.MYSQL_DATABASE,
         },
         queries: [
           {
-            statement: 'SELECT * FROM recipe',
-            idFieldName: 'id',
-            name: 'recipe'
-          }
-        ]
+            statement: "SELECT * FROM recipe ORDER BY title ASC",
+            idFieldName: "id",
+            name: "recipe",
+          },
+          {
+            statement: "SELECT * FROM ingredients ORDER BY position ASC",
+            idFieldName: "id",
+            name: "ingredient",
+            parentName: "recipe",
+            foreignKey: "recipe_id",
+            cardinality: "OneToMany",
+          },
+          {
+            statement: "SELECT * FROM categories ORDER BY category ASC",
+            idFieldName: "id",
+            name: "category",
+            parentName: "recipe",
+            foreignKey: "recipe_id",
+            cardinality: "OneToMany",
+          },
+        ],
       },
-    }    // this (optional) plugin enables Progressive Web App + Offline functionality
+    }, // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],

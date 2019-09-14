@@ -5,7 +5,9 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.8.5",
+    "date-fns": "^2.2.1",
+    "gatsby": "^2.15.15",
+    "gatsby-cli": "^2.7.47",
     "gatsby-image": "^2.1.2",
     "gatsby-plugin-manifest": "^2.1.1",
     "gatsby-plugin-offline": "^2.1.1",
@@ -27,11 +29,12 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
+    "deploy": "gatsby build --prefix-paths && scp -r public/* pi@192.168.1.10:/var/www/html/gourmet/.",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
   "repository": {

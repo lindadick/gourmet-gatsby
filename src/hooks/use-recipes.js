@@ -1,33 +1,28 @@
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery } from "gatsby"
 
 const useRecipes = () => {
   const data = useStaticQuery(graphql`
     query {
+      mysqlRecipe(fields: {}) {
+        id
+      }
       allMysqlRecipe {
-          nodes {
-              cooktime
-              cuisine
-              deleted
-              id
-              ingredient_hash
-              instructions
-              last_modified
-              link
-              modifications
-              mysqlId
-              preptime
-              rating
-              recipe_hash
-              source
-              title
-              yield_unit
-              yields
+        edges {
+          node {
+            fields {
+              slug
+            }
+            id
+            cooktime
+            instructions
+            title
           }
+        }
       }
     }
-  `);
+  `)
 
-  return data.allMysqlRecipe.nodes;
-};
+  return data.allMysqlRecipe.edges
+}
 
-export default useRecipes;
+export default useRecipes
